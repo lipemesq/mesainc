@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
-import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
-import 'package:ps_mesainc/app/modules/login/domain/usecases/get_logged_user.dart';
 import 'package:ps_mesainc/app/modules/login/domain/usecases/logout.dart';
-import 'package:ps_mesainc/app/modules/login/domain/usecases/signup_with_email.dart';
 import 'package:ps_mesainc/app/modules/login/external/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/models/user_data_model.dart';

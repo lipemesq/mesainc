@@ -1,4 +1,4 @@
-import 'package:ps_mesainc/app/modules/feed/domain/core/news_favorite_state.dart';
+import 'package:ps_mesainc/app/modules/feed/core/news_favorite_state.dart';
 
 class News {
   final String title;

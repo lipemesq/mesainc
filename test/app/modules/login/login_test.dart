@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
 import 'package:ps_mesainc/app/modules/login/domain/usecases/login_with_email.dart';
-import 'package:ps_mesainc/app/modules/login/domain/usecases/signup_with_email.dart';
 import 'package:ps_mesainc/app/modules/login/external/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/models/user_data_model.dart';

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:ps_mesainc/app/modules/login/core/errors/errors.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
-import 'package:ps_mesainc/app/modules/login/domain/errors/errors.dart';
 import 'package:ps_mesainc/app/modules/login/domain/repositories/login_repository.dart';
 import 'package:ps_mesainc/app/modules/login/domain/usecases/get_logged_user.dart';
 

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
-import 'package:ps_mesainc/app/modules/login/domain/errors/errors.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/models/user_data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
