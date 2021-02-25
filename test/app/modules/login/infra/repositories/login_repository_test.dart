@@ -55,6 +55,22 @@ main() {
     });
   });
 
+  // - SIGNUP WITH EMAIL
+  group("Cadastro com email, no repositório", () {
+    test("caso de cadastrar ok com o email no repositório", () async {
+      when(datasourceMock.signUpWithEmail(any)).thenAnswer((_) async => LoggedUserMock());
+
+      var result = (await loginRepository.signUpWithEmail(userCredentials)).fold(id, id);
+      expect(result, isA<LoggedUser>());
+    });
+    test("caso de falhar com Exception no cadastro com email", () async {
+      when(datasourceMock.signUpWithEmail(any)).thenThrow((_) async => ErrorAccountAlreadyExists());
+
+      var result = (await loginRepository.signUpWithEmail(userCredentials)).fold(id, id);
+      expect(result, isA<ErrorAccountAlreadyExists>());
+    });
+  });
+
   // - LOGOUT
   group("Logout, no repositório", () {
     test("caso de logout ok", () async {

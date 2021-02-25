@@ -16,6 +16,7 @@ class LoginRepositoryImpl implements LoginRepository {
       var user = await dataSource.getCurrentUser();
       return Right(user);
     } catch (e) {
+      print("catch $e");
       return Left(ErrorNotLogged());
     }
   }
@@ -40,6 +41,19 @@ class LoginRepositoryImpl implements LoginRepository {
       return Right(unit);
     } catch (e) {
       return Left(ErrorCouldntLogout());
+    }
+  }
+
+  @override
+  Future<Either<Exception, LoggedUser>> signUpWithEmail(UserCredentials credentials) async {
+    try {
+      var user = await dataSource.signUpWithEmail(credentials);
+      if (user != null)
+        return Right(user);
+      else
+        return Left(ErrorAccountAlreadyExists());
+    } catch (e) {
+      return Left(ErrorAccountAlreadyExists());
     }
   }
 }

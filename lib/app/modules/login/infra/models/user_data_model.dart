@@ -10,7 +10,7 @@ class UserDataModel extends LoggedUser {
   final DateTime birthday;
   final String token;
 
-  UserDataModel({@required this.name, @required this.email, this.birthday, @required this.token});
+  UserDataModel({this.name, @required this.email, this.birthday, @required this.token});
 
   Map<String, dynamic> toMap() {
     return {
@@ -27,7 +27,7 @@ class UserDataModel extends LoggedUser {
     return UserDataModel(
       name: map['name'],
       email: map['email'],
-      birthday: DateTime.fromMillisecondsSinceEpoch(map['birthday']),
+      birthday: map['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(map['birthday']) : null,
       token: map['token'],
     );
   }

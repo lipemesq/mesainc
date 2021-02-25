@@ -7,5 +7,7 @@ abstract class LoginRepository {
 
   Future<Either<Exception, LoggedUser>> loginWithEmail(UserCredentials credentials);
 
+  Future<Either<Exception, LoggedUser>> signUpWithEmail(UserCredentials credentials);
+
   Future<Either<Exception, Unit>> logout();
 }
