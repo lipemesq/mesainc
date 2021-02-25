@@ -5,27 +5,31 @@ import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
 import 'package:ps_mesainc/app/modules/login/core/errors/errors.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
+import 'package:ps_mesainc/app/modules/login/infra/datasources/login_local_storage.dart';
 import 'package:ps_mesainc/app/modules/login/infra/repositories/login_repository.dart';
 
 class LoginDataSourceMock extends Mock implements LoginDataSource {}
+
+class LoginLocalStorageMock extends Mock implements LoginLocalStorage {}
 
 class LoggedUserMock extends Mock implements LoggedUser {}
 
 main() {
   final datasourceMock = LoginDataSourceMock();
-  final loginRepository = LoginRepositoryImpl(datasourceMock);
+  final localStorageMock = LoginLocalStorageMock();
+  final loginRepository = LoginRepositoryImpl(datasourceMock, localStorageMock);
   final userCredentials = UserCredentials(email: "abc@def.com", password: "123456");
 
   // - GET USER
-  group("Recuperar usuário logado, no repositório", () {
-    test("caso de pegar o usuário logado no repositório", () async {
-      when(datasourceMock.getCurrentUser()).thenAnswer((_) async => LoggedUserMock());
+  group("Recuperar usuário logado, no repositório,", () {
+    test("caso de pegar o usuário logado ok", () async {
+      when(localStorageMock.loadLoggedUser()).thenAnswer((_) async => LoggedUserMock());
 
       var result = (await loginRepository.getLoggedUser()).fold(id, id);
       expect(result, isA<LoggedUser>());
     });
     test("caso de pegar o usuário não logado no repositório", () async {
-      when(datasourceMock.getCurrentUser()).thenThrow((_) async => ErrorNotLogged());
+      when(localStorageMock.loadLoggedUser()).thenThrow((_) async => ErrorNotLogged());
 
       var result = (await loginRepository.getLoggedUser()).fold(id, id);
       expect(result, isA<ErrorNotLogged>());
@@ -33,8 +37,8 @@ main() {
   });
 
   // - LOGIN WITH EMAIL
-  group("Login com email, no repositório", () {
-    test("caso de logar com o email no repositório", () async {
+  group("Login com email, no repositório,", () {
+    test("caso de logar com o email ok", () async {
       when(datasourceMock.loginWithEmail(any)).thenAnswer((_) async => LoggedUserMock());
 
       var result = (await loginRepository.loginWithEmail(userCredentials)).fold(id, id);
@@ -56,8 +60,8 @@ main() {
   });
 
   // - SIGNUP WITH EMAIL
-  group("Cadastro com email, no repositório", () {
-    test("caso de cadastrar ok com o email no repositório", () async {
+  group("Cadastro com email, no repositório,", () {
+    test("caso de cadastrar ok com o email ok", () async {
       when(datasourceMock.signUpWithEmail(any)).thenAnswer((_) async => LoggedUserMock());
 
       var result = (await loginRepository.signUpWithEmail(userCredentials)).fold(id, id);
@@ -72,17 +76,17 @@ main() {
   });
 
   // - LOGOUT
-  group("Logout, no repositório", () {
+  group("Logout, no repositório,", () {
     test("caso de logout ok", () async {
-      when(datasourceMock.logout()).thenAnswer((_) async => unit);
+      when(localStorageMock.deleteLoggedUser()).thenAnswer((_) async => unit);
 
-      var result = (await loginRepository.logout()).fold(id, id);
+      var result = (await loginRepository.removeSavedUser()).fold(id, id);
       expect(result, isA<Unit>());
     });
     test("caso de falha no logout", () async {
-      when(datasourceMock.logout()).thenThrow((_) async => ErrorCouldntLogout());
+      when(localStorageMock.deleteLoggedUser()).thenThrow((_) async => ErrorCouldntLogout());
 
-      var result = (await loginRepository.logout()).fold(id, id);
+      var result = (await loginRepository.removeSavedUser()).fold(id, id);
       expect(result, isA<ErrorCouldntLogout>());
     });
   });

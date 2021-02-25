@@ -6,6 +6,7 @@ import 'package:ps_mesainc/app/app_widget.dart';
 import 'modules/login/domain/entities/user_credentials.dart';
 import 'modules/login/domain/usecases/signup_with_email.dart';
 import 'modules/login/external/datasources/login_datasource.dart';
+import 'modules/login/external/datasources/login_local_storage.dart';
 import 'modules/login/infra/repositories/login_repository.dart';
 
 class AppModule extends MainModule {
@@ -13,7 +14,8 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => Dio()),
         Bind((i) => LoginDataSourceImpl(i.get())),
-        Bind((i) => LoginRepositoryImpl(i.get())),
+        Bind((i) => LoginLocalStorageImpl()),
+        Bind((i) => LoginRepositoryImpl(i.get(), i.get())),
         Bind((i) => SignUpWithEmailImpl(i.get())),
       ];
 

@@ -4,30 +4,35 @@ import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ps_mesainc/app/modules/login/domain/repositories/login_repository.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
+import 'package:ps_mesainc/app/modules/login/infra/datasources/login_local_storage.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   final LoginDataSource dataSource;
+  final LoginLocalStorage localStorage;
 
-  LoginRepositoryImpl(this.dataSource);
+  LoginRepositoryImpl(this.dataSource, this.localStorage);
+
+  // final String userDataId = "user01";
 
   @override
-  Future<Either<Exception, LoggedUser>> getLoggedUser() async {
+  Future<Either<LoginError, LoggedUser>> getLoggedUser() async {
     try {
-      var user = await dataSource.getCurrentUser();
+      var user = await localStorage.loadLoggedUser();
+      if (user == null) return Left(ErrorNotLogged());
+
       return Right(user);
     } catch (e) {
-      print("catch $e");
       return Left(ErrorNotLogged());
     }
   }
 
   @override
-  Future<Either<Exception, LoggedUser>> loginWithEmail(UserCredentials credentials) async {
+  Future<Either<LoginError, LoggedUser>> loginWithEmail(UserCredentials credentials) async {
     try {
       var user = await dataSource.loginWithEmail(credentials);
-      if (user != null)
+      if (user != null) {
         return Right(user);
-      else
+      } else
         return Left(ErrorInvalidCredentials());
     } catch (e) {
       return Left(ErrorInvalidCredentials());
@@ -35,17 +40,7 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Either<Exception, Unit>> logout() async {
-    try {
-      await dataSource.logout();
-      return Right(unit);
-    } catch (e) {
-      return Left(ErrorCouldntLogout());
-    }
-  }
-
-  @override
-  Future<Either<Exception, LoggedUser>> signUpWithEmail(UserCredentials credentials) async {
+  Future<Either<LoginError, LoggedUser>> signUpWithEmail(UserCredentials credentials) async {
     try {
       var user = await dataSource.signUpWithEmail(credentials);
       if (user != null)
@@ -54,6 +49,28 @@ class LoginRepositoryImpl implements LoginRepository {
         return Left(ErrorAccountAlreadyExists());
     } catch (e) {
       return Left(ErrorAccountAlreadyExists());
+    }
+  }
+
+  @override
+  Future<Either<LoginError, Unit>> removeSavedUser() async {
+    try {
+      await localStorage.deleteLoggedUser();
+
+      return Right(unit);
+    } catch (e) {
+      return Left(ErrorCouldntLogout());
+    }
+  }
+
+  @override
+  Future<Either<LoginError, Unit>> saveAsLoggedUser(LoggedUser user) async {
+    try {
+      await localStorage.saveLoggedUser(user);
+
+      return Right(unit);
+    } catch (e) {
+      return Left(ErrorSavingLoggedUser());
     }
   }
 }

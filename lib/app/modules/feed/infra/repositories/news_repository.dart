@@ -3,13 +3,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:ps_mesainc/app/modules/feed/domain/entities/news_page.dart';
 import 'package:ps_mesainc/app/modules/feed/domain/entities/news.dart';
 import 'package:ps_mesainc/app/modules/feed/domain/repositories/news_repository.dart';
-import 'package:ps_mesainc/app/modules/feed/infra/datasources/local_storage_datasource.dart';
 import 'package:ps_mesainc/app/modules/feed/infra/datasources/news_datasource.dart';
+import 'package:ps_mesainc/app/modules/feed/infra/datasources/news_local_storage.dart';
 
 @Injectable(singleton: false)
 class NewsRepositoryImpl implements NewsRepository {
   final NewsDatasource datasource;
-  final NewsLocalStorageDatasource localStorage;
+  final NewsLocalStorage localStorage;
 
   NewsRepositoryImpl(this.datasource, this.localStorage);
 

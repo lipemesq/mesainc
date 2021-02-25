@@ -7,3 +7,5 @@ class ErrorInvalidCredentials extends LoginError {}
 class ErrorAccountAlreadyExists extends LoginError {}
 
 class ErrorCouldntLogout extends LoginError {}
+
+class ErrorSavingLoggedUser extends LoginError {}

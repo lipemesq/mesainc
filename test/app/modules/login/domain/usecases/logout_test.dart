@@ -15,13 +15,13 @@ main() {
   final doLogout = LogoutImpl(repositoryMock);
 
   test('should verify if exist User Logged', () async {
-    when(repositoryMock.logout()).thenAnswer((_) async => Right(unit));
+    when(repositoryMock.removeSavedUser()).thenAnswer((_) async => Right(unit));
 
     var result = (await doLogout()).fold(id, id);
     expect(result, unit);
   });
   test('should return null if user not logged', () async {
-    when(repositoryMock.logout()).thenAnswer((_) async => Left(ErrorCouldntLogout()));
+    when(repositoryMock.removeSavedUser()).thenAnswer((_) async => Left(ErrorCouldntLogout()));
 
     var result = (await doLogout()).fold(id, id);
     expect(result, isA<ErrorCouldntLogout>());

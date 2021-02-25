@@ -8,6 +8,7 @@ import 'package:ps_mesainc/app/modules/login/domain/entities/logged_user.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
 import 'package:ps_mesainc/app/modules/login/domain/usecases/signup_with_email.dart';
 import 'package:ps_mesainc/app/modules/login/external/datasources/login_datasource.dart';
+import 'package:ps_mesainc/app/modules/login/external/datasources/login_local_storage.dart';
 import 'package:ps_mesainc/app/modules/login/infra/datasources/login_datasource.dart';
 import 'package:ps_mesainc/app/modules/login/infra/repositories/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +39,8 @@ main() {
   final dio = DioMock();
 
   final loginDatasource = LoginDataSourceImpl(dio);
-  final loginRepository = LoginRepositoryImpl(loginDatasource);
+  final loginLocalStorage = LoginLocalStorageImpl();
+  final loginRepository = LoginRepositoryImpl(loginDatasource, loginLocalStorage);
   final doSignUp = SignUpWithEmailImpl(loginRepository);
 
   final userCredentials = UserCredentials(name: "test", email: "abc@def.com", password: "123456");

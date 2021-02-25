@@ -19,6 +19,7 @@ main() {
 
   test("caso de login com credenciais corretas", () async {
     when(repositoryMock.loginWithEmail(any)).thenAnswer((_) async => Right(LoggedUserMock()));
+    when(repositoryMock.saveAsLoggedUser(any)).thenAnswer((_) async => Right(unit));
 
     var result = (await doLoginWithEmail(userCredentials)).fold(id, id);
     expect(result, isA<LoggedUser>());
@@ -26,7 +27,17 @@ main() {
 
   test("caso de login com credenciais erradas", () async {
     when(repositoryMock.loginWithEmail(any)).thenAnswer((_) async => Left(ErrorNotLogged()));
+    when(repositoryMock.saveAsLoggedUser(any)).thenAnswer((_) async => Right(unit));
+
     var result = (await doLoginWithEmail(userCredentials)).fold(id, id);
-    expect(result, isA<ErrorNotLogged>());
+    expect(result, isA<ErrorInvalidCredentials>());
+  });
+
+  test("caso de falha ao logar", () async {
+    when(repositoryMock.loginWithEmail(any)).thenAnswer((_) async => Right(LoggedUserMock()));
+    when(repositoryMock.saveAsLoggedUser(any)).thenAnswer((_) async => Left(ErrorSavingLoggedUser()));
+
+    var result = (await doLoginWithEmail(userCredentials)).fold(id, id);
+    expect(result, isA<ErrorSavingLoggedUser>());
   });
 }
