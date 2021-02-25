@@ -1,0 +1,1 @@
+enum NewsFavoriteState { on, off }
