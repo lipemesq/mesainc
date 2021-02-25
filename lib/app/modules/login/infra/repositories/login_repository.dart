@@ -24,7 +24,10 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Exception, LoggedUser>> loginWithEmail(UserCredentials credentials) async {
     try {
       var user = await dataSource.loginWithEmail(credentials);
-      return Right(user);
+      if (user != null)
+        return Right(user);
+      else
+        return Left(ErrorInvalidCredentials());
     } catch (e) {
       return Left(ErrorInvalidCredentials());
     }

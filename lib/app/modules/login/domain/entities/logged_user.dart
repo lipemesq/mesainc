@@ -4,8 +4,7 @@ class LoggedUser {
   final String name;
   final String email;
   final DateTime birthday;
+  final String token;
 
-  String token;
-
-  LoggedUser({@required this.name, @required this.email, this.birthday});
+  LoggedUser({this.name, @required this.email, this.birthday, @required this.token});
 }

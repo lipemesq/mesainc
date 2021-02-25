@@ -6,5 +6,7 @@ abstract class LoginDataSource {
 
   Future<LoggedUser> loginWithEmail(UserCredentials credentials);
 
+  Future<LoggedUser> signUpWithEmail(UserCredentials credentials);
+
   Future<void> logout();
 }

@@ -40,8 +40,15 @@ main() {
       var result = (await loginRepository.loginWithEmail(userCredentials)).fold(id, id);
       expect(result, isA<LoggedUser>());
     });
-    test("caso de falhar no login com email", () async {
+    test("caso de falhar com Exception no login com email", () async {
       when(datasourceMock.loginWithEmail(any)).thenThrow((_) async => ErrorInvalidCredentials());
+
+      var result = (await loginRepository.loginWithEmail(userCredentials)).fold(id, id);
+      expect(result, isA<ErrorInvalidCredentials>());
+    });
+
+    test("caso de falhar com Null no login com email", () async {
+      when(datasourceMock.loginWithEmail(any)).thenReturn(null);
 
       var result = (await loginRepository.loginWithEmail(userCredentials)).fold(id, id);
       expect(result, isA<ErrorInvalidCredentials>());

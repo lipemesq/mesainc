@@ -33,6 +33,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  shared_preferences: ^0.5.12+4
   dartz: ^0.9.2
   dio: ^3.0.10
   flutter_mobx: ^1.1.0+2
