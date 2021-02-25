@@ -25,8 +25,8 @@ main() {
   });
 
   test("caso de login com credenciais erradas", () async {
-    when(repositoryMock.loginWithEmail(any)).thenAnswer((_) async => Left(NotLogged()));
+    when(repositoryMock.loginWithEmail(any)).thenAnswer((_) async => Left(ErrorNotLogged()));
     var result = (await doLoginWithEmail(userCredentials)).fold(id, id);
-    expect(result, isA<NotLogged>());
+    expect(result, isA<ErrorNotLogged>());
   });
 }

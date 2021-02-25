@@ -21,8 +21,8 @@ main() {
   });
 
   test("caso de resgate sem conta logada", () async {
-    when(repositoryMock.getLoggedUser()).thenAnswer((_) async => Left(NotLogged()));
+    when(repositoryMock.getLoggedUser()).thenAnswer((_) async => Left(ErrorNotLogged()));
     var result = (await doGetLoggedUser()).fold(id, id);
-    expect(result, isA<NotLogged>());
+    expect(result, isA<ErrorNotLogged>());
   });
 }

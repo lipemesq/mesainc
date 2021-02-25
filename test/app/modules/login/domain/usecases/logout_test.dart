@@ -23,9 +23,9 @@ main() {
     expect(result, unit);
   });
   test('should return null if user not logged', () async {
-    when(repositoryMock.logout()).thenAnswer((_) async => Left(CouldntLogout()));
+    when(repositoryMock.logout()).thenAnswer((_) async => Left(ErrorCouldntLogout()));
 
     var result = (await doLogout()).fold(id, id);
-    expect(result, isA<CouldntLogout>());
+    expect(result, isA<ErrorCouldntLogout>());
   });
 }
