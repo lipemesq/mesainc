@@ -1,7 +1,7 @@
 import 'package:ps_mesainc/app/modules/feed/domain/entities/news.dart';
 
 abstract class NewsLocalStorage {
-  Future<List<News>> loadFavoritedNews(String id);
+  Future<List<News>> loadFavoritedNews();
 
-  Future<void> saveFavoritedNews(String id, List<News> favoritedNews);
+  Future<void> saveFavoritedNews(List<News> favoritedNews);
 }

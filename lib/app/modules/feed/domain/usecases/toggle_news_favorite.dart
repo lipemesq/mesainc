@@ -18,12 +18,12 @@ class ToggleNewsFavoriteImpl implements ToggleNewsFavorite {
   @override
   Future<Either<Exception, NewsFavoriteState>> call(News news) async {
     if (news.favoriteState == NewsFavoriteState.off) {
-      final result = await repository.favoriteNews(news);
+      final result = await repository.addNewsToFavorites(news);
 
       if (result.isLeft()) throw ErrorOnToggleFavorite();
       return Right(NewsFavoriteState.on);
     } else {
-      final result = await repository.unFavoriteNews(news);
+      final result = await repository.removeNewsFromFavorites(news);
       if (result.isLeft()) throw ErrorOnToggleFavorite();
 
       return Right(NewsFavoriteState.off);
