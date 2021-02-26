@@ -23,8 +23,8 @@ class LoginDataSourceImpl implements LoginDataSource {
       data: jsonEncode(loginQueryParameters),
     );
 
-    if (response.statusCode == 201) {
-      final token = jsonDecode(response.data)['token'] as String;
+    if (response.statusCode == 200) {
+      final token = (response.data)['token'] as String;
       if (token != null && token.isNotEmpty) {
         final user = UserDataModel(email: credentials.email, token: token);
         return user;
@@ -52,7 +52,7 @@ class LoginDataSourceImpl implements LoginDataSource {
     );
 
     if (response.statusCode == 201) {
-      final token = jsonDecode(response.data)['token'] as String;
+      final token = (response.data)['token'] as String;
       if (token != null && token.isNotEmpty) {
         return LoggedUser(email: credentials.email, token: token);
       }

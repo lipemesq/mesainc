@@ -22,19 +22,19 @@ class DioMock extends Mock implements Dio {}
 main() {
   SharedPreferences.setMockInitialValues({});
 
-  String _sucessfulResponse = jsonEncode({
+  final _sucessfulResponse = {
     "token":
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZW1haWwiOiJqb2huQGRvZS5jb20ifQ.px43BWNshWtH09-NSGYuWgawHTeD8diEI2aYTqKwoA4"
-  });
+  };
 
-  String _emptyResponse = jsonEncode({});
+  final _emptyResponse = {};
 
-  String _misspelledResponse = jsonEncode({
+  final _misspelledResponse = {
     "toqen":
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZW1haWwiOiJqb2huQGRvZS5jb20ifQ.px43BWNshWtH09-NSGYuWgawHTeD8diEI2aYTqKwoA4"
-  });
+  };
 
-  String _arrayResponse = jsonEncode([]);
+  final _arrayResponse = [];
 
   final dio = DioMock();
 

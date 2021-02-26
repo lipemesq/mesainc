@@ -22,8 +22,6 @@ class LoginWithEmailImpl implements LoginWithEmail {
     if (loginResult.isLeft()) return Left(ErrorInvalidCredentials());
     final user = loginResult.getOrElse(() => null);
 
-    print(user);
-
     final saveResult = await repository.saveAsLoggedUser(user);
 
     if (saveResult.isLeft()) return Left(ErrorSavingLoggedUser());

@@ -21,19 +21,19 @@ class LoggedUserMock extends Mock implements LoggedUser {}
 class DioMock extends Mock implements Dio {}
 
 main() {
-  String _sucessfulResponse = jsonEncode({
+  final _sucessfulResponse = {
     "token":
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZW1haWwiOiJqb2huQGRvZS5jb20ifQ.px43BWNshWtH09-NSGYuWgawHTeD8diEI2aYTqKwoA4"
-  });
+  };
 
-  String _emptyResponse = jsonEncode({});
+  final _emptyResponse = {};
 
-  String _misspelledResponse = jsonEncode({
+  final _misspelledResponse = {
     "toqen":
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OSwiZW1haWwiOiJqb2huQGRvZS5jb20ifQ.px43BWNshWtH09-NSGYuWgawHTeD8diEI2aYTqKwoA4"
-  });
+  };
 
-  String _arrayResponse = jsonEncode([]);
+  final _arrayResponse = [];
 
   final dio = DioMock();
 
@@ -51,7 +51,7 @@ main() {
 
   test("caso de login completo com tudo ok", () async {
     when(dio.post(any, data: anyNamed('data')))
-        .thenAnswer((_) async => Response(data: _sucessfulResponse, statusCode: 201));
+        .thenAnswer((_) async => Response(data: _sucessfulResponse, statusCode: 200));
 
     final result = (await doLogin(userCredentials));
     expect(result, isA<Right>());
