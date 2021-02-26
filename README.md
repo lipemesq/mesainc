@@ -12,3 +12,5 @@ A parte do feed, que é meio que a principal, não está implementada (com a exc
 Como fiz de dentro pra fora, tem os casos de uso, repositórios e datasources do módulo do feed, então realmente meio que faltou só a UI.
 
 É isso, mano, abraços!
+
+Link apk: https://drive.google.com/file/d/1GOtDIYay4mjmOongKB7l5zMfad5eQJmh/view?usp=sharing
