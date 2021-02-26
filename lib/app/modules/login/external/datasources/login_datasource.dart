@@ -16,11 +16,11 @@ class LoginDataSourceImpl implements LoginDataSource {
   @override
   Future<LoggedUser> loginWithEmail(UserCredentials credentials) async {
     final loginUrl = baseUrl + "/v1/client/auth/signin";
-    final loginQueryParameters = _mountLoginData(credentials);
+    final loginQueryData = _mountLoginData(credentials);
 
     Response response = await dio.post(
       loginUrl,
-      data: jsonEncode(loginQueryParameters),
+      data: jsonEncode(loginQueryData),
     );
 
     if (response.statusCode == 200) {
@@ -44,11 +44,11 @@ class LoginDataSourceImpl implements LoginDataSource {
   @override
   Future<LoggedUser> signUpWithEmail(UserCredentials credentials) async {
     final signUpUrl = baseUrl + "/v1/client/auth/signup";
-    final signUpQueryParameters = _mountSignUpData(credentials);
+    final signUpData = _mountSignUpData(credentials);
 
     Response response = await dio.post(
       signUpUrl,
-      data: jsonEncode(signUpQueryParameters),
+      data: jsonEncode(signUpData),
     );
 
     if (response.statusCode == 201) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:ps_mesainc/app/modules/core/usar_data.dart';
 import 'package:ps_mesainc/app/modules/login/domain/entities/user_credentials.dart';
 import 'package:ps_mesainc/app/modules/login/domain/usecases/login_with_email.dart';
 import 'package:asuka/asuka.dart' as asuka;
@@ -30,6 +31,8 @@ abstract class _LoginControllerBase with Store {
       UserCredentials(email: email, password: password),
     );
     if (result.isRight()) {
+      final user = result.getOrElse(() => null);
+      Modular.get<UserData>().loggedUser = user;
       navigateToFeed();
     } else {
       showErrorSnackbar();
@@ -37,7 +40,7 @@ abstract class _LoginControllerBase with Store {
   }
 
   navigateToFeed() {
-    Modular.to.pushNamedAndRemoveUntil("/feed", (r) => r == null); //.popAndPushNamed("/feed");
+    Modular.to.pushNamedAndRemoveUntil("/feed", (r) => r == null);
   }
 
   showErrorSnackbar() {

@@ -48,6 +48,7 @@ class LoginRepositoryImpl implements LoginRepository {
       else
         return Left(ErrorAccountAlreadyExists());
     } catch (e) {
+      throw e;
       return Left(ErrorAccountAlreadyExists());
     }
   }

@@ -2,20 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:ps_mesainc/app/app_widget.dart';
+import 'package:ps_mesainc/app/modules/core/usar_data.dart';
 import 'package:ps_mesainc/app/modules/feed/feed_module.dart';
 import 'package:ps_mesainc/app/modules/login/login_module.dart';
 
-import 'modules/login/domain/entities/user_credentials.dart';
 import 'modules/login/domain/usecases/signup_with_email.dart';
-import 'modules/login/external/datasources/login_datasource.dart';
-import 'modules/login/external/datasources/login_local_storage.dart';
-import 'modules/login/infra/repositories/login_repository.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => Dio()),
         Bind((i) => SignUpWithEmailImpl(i.get())),
+        Bind((i) => UserData()),
       ];
 
   @override

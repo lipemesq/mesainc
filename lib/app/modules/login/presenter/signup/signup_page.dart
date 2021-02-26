@@ -16,6 +16,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends ModularState<SignupPage, SignupController> {
   //use 'controller' variable to access controller
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +35,42 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 26),
-                        child: TextInputFormField(title: "Nome"),
+                        child: TextInputFormField(
+                          title: "Nome",
+                          validator: (name) {
+                            if (name.isNotEmpty) return null;
+                            return "Nome não pode ser vazio.";
+                          },
+                          onSave: controller.setName,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 26),
-                        child: TextInputFormField(title: "E-mail"),
+                        child: TextInputFormField(
+                          title: "E-mail",
+                          validator: (email) {
+                            if (email.contains("@") && email.contains("."))
+                              return null;
+                            else
+                              return "Email inválido.";
+                          },
+                          onSave: controller.setEmail,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 26),
                         child: TextInputFormField(
                           title: "Senha",
                           obscure: true,
+                          validator: (password) {
+                            return password.isEmpty ? "A senha não foi inserida." : null;
+                          },
+                          onSave: controller.setPassword,
                         ),
                       ),
                       Padding(
@@ -56,19 +78,32 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                         child: TextInputFormField(
                           title: "Confirmar senha",
                           obscure: true,
+                          validator: (password) {
+                            if (password == controller.password) return null;
+                            return "As senhas não coincidem.";
+                          },
+                          onSave: controller.setAgainPassword,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 26),
                         child: TextInputFormField(
                           title: "Data de nascimento - opcional",
-                          keyboardType: TextInputType.datetime,
+                          keyboardType: TextInputType.number,
                           lastField: true,
+                          isDate: true,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 26),
-                        child: CalloutButton.blue(text: "Cadastrar", onPressed: () => null),
+                        child: CalloutButton.blue(
+                            text: "Cadastrar",
+                            onPressed: () async {
+                              _formKey.currentState.save();
+                              if (_formKey.currentState.validate()) {
+                                controller.signUp();
+                              }
+                            }),
                       ),
                     ],
                   ),
