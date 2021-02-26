@@ -19,39 +19,67 @@ final $FeedController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedController on _FeedControllerBase, Store {
-  final _$valueAtom = Atom(name: '_FeedControllerBase.value');
+  final _$newsAtom = Atom(name: '_FeedControllerBase.news');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  ObservableList<News> get news {
+    _$newsAtom.reportRead();
+    return super.news;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set news(ObservableList<News> value) {
+    _$newsAtom.reportWrite(value, super.news, () {
+      super.news = value;
     });
   }
 
-  final _$_FeedControllerBaseActionController =
-      ActionController(name: '_FeedControllerBase');
+  final _$highlightsAtom = Atom(name: '_FeedControllerBase.highlights');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
-        name: '_FeedControllerBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_FeedControllerBaseActionController.endAction(_$actionInfo);
-    }
+  ObservableList<News> get highlights {
+    _$highlightsAtom.reportRead();
+    return super.highlights;
+  }
+
+  @override
+  set highlights(ObservableList<News> value) {
+    _$highlightsAtom.reportWrite(value, super.highlights, () {
+      super.highlights = value;
+    });
+  }
+
+  final _$highlightsRequestStatusAtom =
+      Atom(name: '_FeedControllerBase.highlightsRequestStatus');
+
+  @override
+  RequestStatus get highlightsRequestStatus {
+    _$highlightsRequestStatusAtom.reportRead();
+    return super.highlightsRequestStatus;
+  }
+
+  @override
+  set highlightsRequestStatus(RequestStatus value) {
+    _$highlightsRequestStatusAtom
+        .reportWrite(value, super.highlightsRequestStatus, () {
+      super.highlightsRequestStatus = value;
+    });
+  }
+
+  final _$getHighlightsAsyncAction =
+      AsyncAction('_FeedControllerBase.getHighlights');
+
+  @override
+  Future getHighlights() {
+    return _$getHighlightsAsyncAction.run(() => super.getHighlights());
   }
 
   @override
   String toString() {
     return '''
-value: ${value}
+news: ${news},
+highlights: ${highlights},
+highlightsRequestStatus: ${highlightsRequestStatus}
     ''';
   }
 }

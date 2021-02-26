@@ -27,7 +27,7 @@ class UserDataModel extends LoggedUser {
     return UserDataModel(
       name: map['name'],
       email: map['email'],
-      birthday: map['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(map['birthday']) : null,
+      birthday: map['birthday'] != null ? DateTime.parse(map['birthday']) : null,
       token: map['token'],
     );
   }

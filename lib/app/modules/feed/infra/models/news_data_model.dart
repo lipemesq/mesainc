@@ -40,14 +40,14 @@ class NewsDataModel extends News {
     if (map == null) return null;
 
     return NewsDataModel(
-      title: map['title'],
+      title: map['title'] ?? "erro",
       description: map['description'],
       content: map['content'],
       author: map['author'],
-      publishedAt: map['publishedAt'] ? DateTime.fromMillisecondsSinceEpoch(map['publishedAt']) : null,
+      publishedAt: map['published_at'] != null ? DateTime.parse((map['published_at'])) : null,
       highlight: map['highlight'],
       url: map['url'],
-      imageUrl: map['imageUrl'],
+      imageUrl: map['image_url'],
     );
   }
 

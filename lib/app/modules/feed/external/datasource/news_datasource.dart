@@ -26,9 +26,19 @@ class NewsDataSourceImpl implements NewsDatasource {
     );
 
     if (response.statusCode == 200) {
-      final results = jsonDecode(response.data)['data'] as List<Map<String, dynamic>>;
+      final List<Map<String, dynamic>> results = (response.data['data'] as List).cast<Map<String, dynamic>>();
       if (results != null) {
-        final highlights = results.map((e) => NewsDataModel.fromMap(e).entity()).toList();
+        print(results.runtimeType);
+        print(results[1].runtimeType);
+        print(results[1]);
+        List<NewsDataModel> highlights = [];
+
+        results.forEach((e) {
+          final Map<String, dynamic> f = e;
+          print(NewsDataModel.fromMap(f).title);
+          highlights.add(NewsDataModel.fromMap(f));
+        });
+
         return highlights;
       }
     }

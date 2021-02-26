@@ -58,7 +58,7 @@ class NewsRepositoryImpl implements NewsRepository {
       if (highlights == null) return Left(ErrorLoadingHighlights());
 
       return Right(highlights);
-    } catch (e) {
+    } on FeedError catch (e) {
       return Left(ErrorLoadingHighlights());
     }
   }
